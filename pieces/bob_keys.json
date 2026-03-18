@@ -1,0 +1,24 @@
+{
+    "identity_key": {
+        "priv": "8b42a569ce69f538c7af4894bb5fcb097e9c2512afbb9d81a4d42a76ccbaa8a8",
+        "pub": "d8d2be16c08ff8e1385b740db30d1575c6e315e4f7d14549fccc5bb2b062b63c"
+    },
+    "signed_pre_key": {
+        "priv": "f1fd2e17196508be219db3dc90e8f8f6524509ea1ac81b4dcfcebee48701ad30",
+        "pub": "658d51ecf48158998eaeab005060b0d7901dbbddd5161dd1ed988f16d461317f"
+    },
+    "one_time_pre_keys": {
+        "opk_1": {
+            "priv": "1891850f47d5c6e710b0a51c74548ae9bb7e2a28f935c72f8bbda8000077eb91",
+            "pub": "40b838e4dab6b3841b7b484c650262dbd3a9ed71466148a47c859af322df883a"
+        },
+        "opk_2": {
+            "priv": "0610394a692070a42ed48f88c9860abaa3f235a6fa0c2883ed9c7ab19bd60639",
+            "pub": "e18278ffe7d8d7978efdd5e3b45f7406d9d6b1d7fbcf706ae5d74c4ede8fd643"
+        },
+        "opk_3": {
+            "priv": "7568bf56b6782ef46312caf01d011982d512b1d965b29bcae35110490c65d71b",
+            "pub": "9ecc3ec1b6c82694eb67e6f631f1662cb5f79e3497dd67ceb7016bb90fe1d81e"
+        }
+    }
+}

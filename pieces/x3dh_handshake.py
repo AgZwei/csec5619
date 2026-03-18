@@ -2,6 +2,7 @@ import json
 import binascii
 import hashlib
 from nacl.public import PrivateKey, PublicKey
+from nacl.bindings import crypto_scalarmult
 
 def load_keys(filename):
     with open(filename, 'r') as f:
@@ -40,10 +41,12 @@ def main():
     
     # The X3DH Math: 4 Diffie-Hellman exchanges
     # exchange() securely computes a shared secret between a private and public key
-    dh1 = alice_IK_priv.exchange(bob_SPK_pub)
-    dh2 = alice_EK_priv.exchange(bob_IK_pub)
-    dh3 = alice_EK_priv.exchange(bob_SPK_pub)
-    dh4 = alice_EK_priv.exchange(bob_OPK_pub)
+    # The X3DH Math: 4 Diffie-Hellman exchanges using raw scalar multiplication.
+    # crypto_scalarmult takes (private_key_bytes, public_key_bytes)
+    dh1 = crypto_scalarmult(bytes(alice_IK_priv), bytes(bob_SPK_pub))
+    dh2 = crypto_scalarmult(bytes(alice_EK_priv), bytes(bob_IK_pub))
+    dh3 = crypto_scalarmult(bytes(alice_EK_priv), bytes(bob_SPK_pub))
+    dh4 = crypto_scalarmult(bytes(alice_EK_priv), bytes(bob_OPK_pub))
     
     # Alice combines them all and passes them through a Key Derivation Function (KDF)
     # We use SHA-256 here for simplicity, real Signal uses HKDF
@@ -73,10 +76,12 @@ def main():
     
     # Bob performs the exact mirrored Diffie-Hellman math!
     # Notice how the Private/Public pairings are flipped compared to Alice.
-    dh1_bob = bob_SPK_priv.exchange(alice_IK_pub)
-    dh2_bob = bob_IK_priv.exchange(alice_EK_pub)
-    dh3_bob = bob_SPK_priv.exchange(alice_EK_pub)
-    dh4_bob = bob_OPK_priv.exchange(alice_EK_pub)
+    # Bob performs the exact mirrored Diffie-Hellman math!
+    # Notice how the Private/Public pairings are flipped compared to Alice.
+    dh1_bob = crypto_scalarmult(bytes(bob_SPK_priv), bytes(alice_IK_pub))
+    dh2_bob = crypto_scalarmult(bytes(bob_IK_priv), bytes(alice_EK_pub))
+    dh3_bob = crypto_scalarmult(bytes(bob_SPK_priv), bytes(alice_EK_pub))
+    dh4_bob = crypto_scalarmult(bytes(bob_OPK_priv), bytes(alice_EK_pub))
     
     # Bob combines them using the exact same KDF
     bob_shared_material = dh1_bob + dh2_bob + dh3_bob + dh4_bob
